@@ -1,10 +1,12 @@
-import { saveData } from "./api";
-import { formRef } from "./refs";
+import { saveData, getData } from "./api";
+import { formRef, jsContainerRef } from "./refs";
+import{createCard} from "./markup"
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
 
 // let formData = {};
+
 
 formRef.addEventListener("submit", handleFormValue);
 
@@ -42,6 +44,21 @@ async function handleFormValue(event) {
   formData3.createdAt = Date.now();
 
   const response = await saveData(formData3);
+ const markup =  createCard([response]);
+ addMarkup (markup);
 
   console.log(response);
+}
+
+async function init(){
+  const response = await getData()
+  console.log(response);
+ const markup =  createCard(response);
+ console.log(markup);
+ addMarkup (markup)
+}
+init()
+
+function addMarkup (markup){
+  jsContainerRef.insertAdjacentHTML('beforeend', markup )
 }

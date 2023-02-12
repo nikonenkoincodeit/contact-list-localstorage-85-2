@@ -36,3 +36,30 @@ export async function saveData(payload) {
     req.onerror = () => reject(req.console.error());
   });
 }
+
+// export const getData = name => {
+//   return fetch(
+//     BASE_URL
+//   ).then(response=> {
+//     if(!response.ok){
+//       throw new Error(response.statusText)
+//     }
+//     return response.json();
+//   })
+// }
+
+// export const getData= async () => {
+// const response = await axios.get('');
+// return response.data;
+// }
+
+export const getData = ()=>{
+ return new Promise((resolve, reject)=>{
+    req.open('GET', BASE_URL)
+    req.responseType = 'json'
+    req.send()
+    req.onload = () => resolve(req.response);
+    req.onerror = () => reject(req.console.error());
+  })
+
+}
