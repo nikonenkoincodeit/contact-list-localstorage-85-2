@@ -1,7 +1,7 @@
-import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3000/contacts";
+import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:3000/contacts';
 
-const BASE_URL = "http://localhost:3000/contacts";
+const BASE_URL = 'http://localhost:3000/contacts';
 
 // const options = {
 //   method: "POST",
@@ -27,9 +27,9 @@ const req = new XMLHttpRequest();
 
 export async function saveData(payload) {
   return new Promise((resolve, reject) => {
-    req.open("POST", BASE_URL);
-    req.responseType = "json";
-    req.setRequestHeader("Content-Type", "application/json");
+    req.open('POST', BASE_URL);
+    req.responseType = 'json';
+    req.setRequestHeader('Content-Type', 'application/json');
     req.send(JSON.stringify(payload));
 
     req.onload = () => resolve(req.response);
@@ -53,13 +53,40 @@ export async function saveData(payload) {
 // return response.data;
 // }
 
-export const getData = ()=>{
- return new Promise((resolve, reject)=>{
-    req.open('GET', BASE_URL)
-    req.responseType = 'json'
-    req.send()
+export const getData = () => {
+  return new Promise((resolve, reject) => {
+    req.open('GET', BASE_URL);
+    req.responseType = 'json';
+    req.send();
     req.onload = () => resolve(req.response);
     req.onerror = () => reject(req.console.error());
-  })
+  });
+};
 
-}
+export const deleteData = id => {
+  const response = fetch(BASE_URL + '/' + id, { method: 'DELETE' }).then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json();
+  });
+
+  return response;
+};
+
+export const updateData = (id, item) => {
+  const response = fetch(BASE_URL + '/' + id, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(item),
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return response.json();
+  });
+
+  return response;
+};

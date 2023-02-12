@@ -1,14 +1,13 @@
-import { saveData, getData } from "./api";
-import { formRef, jsContainerRef } from "./refs";
-import{createCard} from "./markup"
+import { saveData, getData, deleteData, updateData } from './api';
+import { formRef, jsContainerRef } from './refs';
+import { createCard } from './markup';
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/style.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/style.css';
 
 // let formData = {};
 
-
-formRef.addEventListener("submit", handleFormValue);
+formRef.addEventListener('submit', handleFormValue);
 
 async function handleFormValue(event) {
   event.preventDefault();
@@ -40,25 +39,63 @@ async function handleFormValue(event) {
   // console.log(formData2);
 
   // вариант 3 ******************************************
-  const formData3 = Object.fromEntries(new FormData(event.currentTarget));
-  formData3.createdAt = Date.now();
+  try {
+    const formData3 = Object.fromEntries(new FormData(event.currentTarget));
+    formData3.createdAt = Date.now();
 
-  const response = await saveData(formData3);
- const markup =  createCard([response]);
- addMarkup (markup);
-
-  console.log(response);
+    const response = await saveData(formData3);
+    const markup = createCard([response]);
+    addMarkup(markup);
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
-async function init(){
-  const response = await getData()
-  console.log(response);
- const markup =  createCard(response);
- console.log(markup);
- addMarkup (markup)
-}
-init()
+async function init() {
+  try {
+    const response = await getData();
+    const markup = createCard(response);
 
-function addMarkup (markup){
-  jsContainerRef.insertAdjacentHTML('beforeend', markup )
+    addMarkup(markup);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+init();
+
+function addMarkup(markup) {
+  jsContainerRef.insertAdjacentHTML('beforeend', markup);
+}
+
+jsContainerRef.addEventListener('click', deleteCard);
+jsContainerRef.addEventListener('input', jsContainerInput);
+
+async function deleteCard(evt) {
+  try {
+    if (evt.target.nodeName !== 'BUTTON') {
+      return;
+    }
+
+    const cardWrapRef = evt.target.closest('.js-wrap-card');
+    const id = cardWrapRef.dataset.cardid;
+
+    const response = await deleteData(id);
+
+    cardWrapRef.remove();
+  } catch (err) {
+    console.log(err.message);
+  }
+}
+
+async function jsContainerInput(evt) {
+  try {
+    const value = evt.target.textContent;
+
+    const cardWrapRef = evt.target.closest('.js-wrap-card');
+    const id = cardWrapRef.dataset.cardid;
+
+    const response = await updateData(id, { name: value });
+  } catch (error) {
+    console.log(error.message);
+  }
 }

@@ -1,28 +1,7 @@
 {
   "contacts": [
     {
-      "createdAt": "2022-10-20T23:44:33.963Z",
-      "name": "Poly ",
-      "email": "Ellie@mail.com",
-      "number": "655-496-6787",
-      "id": "2"
-    },
-    {
-      "name": "Andrey",
-      "number": "+38056566454560",
-      "email": "Andrey@gmail.com",
-      "createdAt": 1676192252494,
-      "id": "n_MlzIP"
-    },
-    {
-      "name": "Sasha",
-      "number": "+385065888664",
-      "email": "Sasha@gmail.com",
-      "createdAt": 1676192512298,
-      "id": "Huhi3Pg"
-    },
-    {
-      "name": "Pavel",
+      "name": "Pavdasdasel",
       "number": "+3805656545888",
       "email": "pavel@gmail.com",
       "createdAt": 1676193108450,
@@ -34,13 +13,6 @@
       "email": "vygovskiy201444@gmail.com",
       "createdAt": 1676196910094,
       "id": "CJsPFkE"
-    },
-    {
-      "name": "dmytro",
-      "number": "+434343434343",
-      "email": "vygovskiy201444@gmail.com",
-      "createdAt": 1676196910561,
-      "id": "csv6HFK"
     }
   ]
 }
