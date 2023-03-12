@@ -1,11 +1,12 @@
 import { formEl, containerEl } from "./refs";
-import { getData, addData } from "./api";
+import { getData, addData, deleteById } from "./api";
 import { createCard } from "./markup";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
 
 formEl.addEventListener("submit", onSubmit);
+containerEl.addEventListener("click", onDelete);
 
 async function onSubmit(e) {
   e.preventDefault();
@@ -45,3 +46,16 @@ function appendMarkup(markup) {
 }
 
 init();
+
+async function onDelete(e) {
+  try {
+    e.preventDefault();
+    if (!e.target.classList.contains("btn-close")) return;
+    const cardEl = e.target.closest(".js-wrap-card");
+    const cardId = cardEl.dataset.cardid;
+    await deleteById(cardId);
+    cardEl.remove();
+  } catch (error) {
+    console.log(error.message);
+  }
+}

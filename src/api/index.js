@@ -22,3 +22,11 @@ export async function addData(data) {
   }
   return response.json();
 }
+
+export async function deleteById(id) {  
+  const response = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response.json();
+}
