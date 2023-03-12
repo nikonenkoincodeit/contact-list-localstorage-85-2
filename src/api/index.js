@@ -7,3 +7,18 @@ export async function getData() {
   }
   return response.json();
 }
+
+export async function addData(data) {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+  const response = await fetch(BASE_URL, options);
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response.json();
+}
