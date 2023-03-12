@@ -1,5 +1,5 @@
 import { formEl, containerEl } from "./refs";
-import { getData, addData, deleteById } from "./api";
+import { getData, addData, deleteById, changeUserName } from "./api";
 import { createCard } from "./markup";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,6 +7,7 @@ import "./css/style.css";
 
 formEl.addEventListener("submit", onSubmit);
 containerEl.addEventListener("click", onDelete);
+containerEl.addEventListener("input", changeName);
 
 async function onSubmit(e) {
   e.preventDefault();
@@ -55,6 +56,17 @@ async function onDelete(e) {
     const cardId = cardEl.dataset.cardid;
     await deleteById(cardId);
     cardEl.remove();
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+function changeName(e) {
+  try {
+    const name = e.target.textContent;
+    const cardEl = e.target.closest(".js-wrap-card");
+    const cardId = cardEl.dataset.cardid;
+    changeUserName(cardId, { name });
   } catch (error) {
     console.log(error.message);
   }
