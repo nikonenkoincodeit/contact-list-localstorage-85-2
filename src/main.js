@@ -1,4 +1,6 @@
-import { formEl } from "./refs";
+import { formEl, containerEl } from "./refs";
+import { getData } from "./api";
+import { createCard } from "./markup";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
@@ -16,3 +18,22 @@ function onSubmit(e) {
   const newObj2 = Object.fromEntries(new FormData(e.target));
   e.target.reset();
 }
+
+async function init() {
+  try {
+    const dataResponse = await getData();
+    if (!dataResponse.length) {
+      return;
+    }
+    const markup = createCard(dataResponse);
+    appendMarkup(markup);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+function appendMarkup(markup) {
+  containerEl.insertAdjacentHTML("beforeend", markup);
+}
+
+init();
