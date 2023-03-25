@@ -1,5 +1,5 @@
 import { formEl, containerEl } from "./refs";
-import { postData, getData } from "./api";
+import { postData, getData, deleteData } from "./api";
 import { createCard } from "./markup";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -57,3 +57,26 @@ function addMarkup(markup) {
 }
 
 init();
+
+containerEl.addEventListener("click", deleteCard);
+
+async function deleteCard (event) {
+
+    try {
+        if (event.target.nodeName !== "BUTTON") {
+            return;
+          }
+          const card = event.target.closest('.js-wrap-card');
+          console.log(card);
+          const cardId = card.dataset.cardid;
+          console.log(cardId);
+          await deleteData(cardId);
+          card.remove();
+     } catch (error) {
+        console.log(error.message)
+    }
+    
+}
+
+
+

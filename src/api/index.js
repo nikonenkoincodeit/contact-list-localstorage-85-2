@@ -25,3 +25,15 @@ export async function getData() {
   }
   throw new Error(response.statusText);
 }
+
+export async function deleteData(id) {
+  const response = await fetch(BASE_URL + id, {
+    method: "DELETE",
+    });
+
+  if (response.ok) {
+    return response.json();
+  }
+  throw new Error(response.statusText);
+}
+
