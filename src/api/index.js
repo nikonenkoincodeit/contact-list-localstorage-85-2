@@ -37,3 +37,19 @@ export async function deleteData(id) {
   throw new Error(response.statusText);
 }
 
+export async function upData(data = {},id) {
+  // Default options are marked with *
+    const response = await fetch(BASE_URL+id, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (response.ok) {
+    return response.json();
+  }
+  throw new Error(response.statusText);
+}

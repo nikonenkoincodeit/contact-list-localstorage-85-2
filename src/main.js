@@ -1,5 +1,5 @@
 import { formEl, containerEl } from "./refs";
-import { postData, getData, deleteData } from "./api";
+import { postData, getData, deleteData, upData } from "./api";
 import { createCard } from "./markup";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -48,7 +48,7 @@ async function init() {
     const markup = createCard(response);
     addMarkup(markup);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 }
 
@@ -66,10 +66,7 @@ async function deleteCard (event) {
         if (event.target.nodeName !== "BUTTON") {
             return;
           }
-          const card = event.target.closest('.js-wrap-card');
-          console.log(card);
-          const cardId = card.dataset.cardid;
-          console.log(cardId);
+          const { cardId, card} = getInfoCard(event)
           await deleteData(cardId);
           card.remove();
      } catch (error) {
@@ -77,6 +74,23 @@ async function deleteCard (event) {
     }
     
 }
-
+containerEl.addEventListener("input", updateName)
+async function updateName(event) {
+    try {
+        const name = event.target.textContent
+        console.log(name);
+        
+        const { cardId} = getInfoCard(event)
+        await upData({name}, cardId);
+    } catch (error) {
+        console.log(error.message)
+    }
+    
+}
+function getInfoCard(event) { 
+const card = event.target.closest('.js-wrap-card');
+    const cardId = card.dataset.cardid;
+    return { cardId, card };
+}
 
 
