@@ -1,5 +1,6 @@
-import { formEl } from "./refs";
-import { postData } from "./api";
+import { formEl, containerEl } from "./refs";
+import { postData, getData } from "./api";
+import { createCard } from "./markup";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
@@ -27,6 +28,8 @@ async function onSubmit(e) {
     data.createdAt = Date.now();
 
     const response = await postData(data);
+    const markup = createCard([data]);
+    addMarkup(markup);
 
     console.log(response);
 
@@ -35,3 +38,22 @@ async function onSubmit(e) {
     console.log(error);
   }
 }
+
+async function init() {
+  try {
+    const response = await getData();
+    if (!response.length) {
+      return;
+    }
+    const markup = createCard(response);
+    addMarkup(markup);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function addMarkup(markup) {
+  containerEl.insertAdjacentHTML("beforeend", markup);
+}
+
+init();

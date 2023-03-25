@@ -16,3 +16,12 @@ export async function postData(data = {}) {
   }
   throw new Error(response.statusText);
 }
+
+export async function getData() {
+  const response = await fetch(BASE_URL);
+
+  if (response.ok) {
+    return response.json();
+  }
+  throw new Error(response.statusText);
+}
