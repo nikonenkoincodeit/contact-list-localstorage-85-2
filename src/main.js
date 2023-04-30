@@ -1,5 +1,6 @@
-import { formEl } from "./refs";
-import { saveArrObj } from "./api";
+import { formEl, containerEl } from "./refs";
+import { load, saveArrObj } from "./api";
+import { createCard } from "./markup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
 
@@ -18,10 +19,25 @@ function handlerSubmit(e) {
   //     }
   //   });
   const newObj = Object.fromEntries(new FormData(e.target));
-  newObj.id = Date.now();
+  newObj.createdAt = Date.now();
   saveArrObj(newObj, STORAGE_KEY);
   e.target.reset();
   console.log(newObj);
+  const markup = createCard([newObj]);
+  pushMarkup(markup);
 }
+
+function init() {
+  const cards = load(STORAGE_KEY);
+  if (!cards.length) return;
+  const markup = createCard(cards);
+  pushMarkup(markup);
+}
+
+function pushMarkup(markup) {
+  containerEl.insertAdjacentHTML("beforeend", markup);
+}
+
+init();
 
 formEl.addEventListener("submit", handlerSubmit);
