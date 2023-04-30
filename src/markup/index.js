@@ -3,7 +3,7 @@ export const createCard = (contacts = []) => {
     .map(({ createdAt, id, email, number, name }) => {
       const dateResult = Date.now() - new Date(createdAt).getTime();
       const days = Math.floor(dateResult / (1000 * 60 * 60 * 24));
-      return `<div class="col-md-4 js-wrap-card" data-cardId=${id}>
+      return `<div class="col-md-4 js-wrap-card" data-cardId=${createdAt}>
       <div class="card p-3 mb-2 shadow">
         <div class="d-flex justify-content-between pb-3 border-bottom">
           <div class="d-flex flex-row align-items-center gap-1">
