@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack --mode development",
     "start": "webpack server --mode development --open",
-    "server": "json-server -w server/db.json"
+    "server": "json-server -w server/db.json",
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",
