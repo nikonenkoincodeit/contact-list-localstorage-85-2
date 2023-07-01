@@ -1,5 +1,6 @@
 import { uid } from 'uid';
 import { formEl } from "./refs";
+import { setItem } from './api';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
 
@@ -13,6 +14,8 @@ function onSubmit(evt) {
     const obj = makeObj(data)
     console.log(obj);
     evt.target.reset()
+    setItem(obj);
+
 }
 
 // // const {name, number, email} = evt.target.elements
@@ -28,7 +31,9 @@ function onSubmit(evt) {
 // }
 
 function makeObj(obj) {
-    return { ...obj, id:uid(), createdAt:Date.now() }
+    return { ...obj, id: uid(), createdAt: Date.now() }
 }
+
+
 
 
